@@ -598,3 +598,26 @@ th, td.n, td.d, td.l {
     break-inside: avoid; /* avoids splitting a section across two pages when possible */
   }
 }
+
+
+/* ---------- 12. JOURNALS TABLE: IMPACT FACTOR AND HEC CATEGORY ----------
+   Extra columns used only in the Journals table.
+   td.f = Impact Factor, td.h = HEC category (W, X or Y). */
+td.f { width: 70px; }
+td.h { width: 80px; }
+td.f, td.h { text-align: left; }
+
+/* On phones the column titles are hidden, so small labels
+   are added in front of the values instead. */
+@media (max-width: 720px) {
+  .journals tr {
+    grid-template-columns: auto 1fr auto auto auto;
+  }
+  .journals td:nth-child(2) { grid-column: 2 / 6; }
+  .journals td.d { grid-column: 2; }
+  .journals td.f { grid-column: 3; grid-row: 2; width: auto; font-size: 15px; color: var(--muted); }
+  .journals td.h { grid-column: 4; grid-row: 2; width: auto; font-size: 15px; color: var(--muted); }
+  .journals td.l { grid-column: 5; grid-row: 2; }
+  .journals td.f::before { content: "IF "; }
+  .journals td.h::before { content: "HEC "; }
+}
