@@ -1,0 +1,600 @@
+/* =====================================================
+   Portfolio stylesheet for Israr Akhter
+   Sections in this file:
+   1. Colors (change the whole look from here)
+   2. Base styles
+   3. Navigation bar
+   4. Header and photo
+   5. Page sections (About, Experience, Education)
+   6. Publications tables
+   7. Skills
+   8. Contact
+   9. Footer
+   10. Mobile adjustments
+   ===================================================== */
+
+
+/* ---------- 1. COLORS ----------
+   All colors live here as variables. Change a value once
+   and it updates everywhere on the page.
+   --bg          page background
+   --surface     background of nav bar, tables and cards
+   --ink         main text color
+   --muted       softer text color (dates, descriptions)
+   --line        thin border and divider lines
+   --accent      main brand color (buttons, links, role text)
+   --accent-ink  text color placed on top of the accent color
+*/
+:root {
+  --bg: #f6f8fa;
+  --surface: #fff;
+  --ink: #14212b;
+  --muted: #51606c;
+  --line: #d5dde4;
+  --accent: #0b5c7a;
+  --accent-ink: #fff;
+
+  /* Side margins of the text, like the margins of an A4 page.
+     On A4 paper the side margin is about 9.5 percent of the page
+     width (20mm of 210mm), so the same proportion is used here:
+     the website fills the whole screen, and only the text keeps
+     neat margins on the left and right.
+     Very wide monitors stop at 160px, and phones use smaller
+     margins (see the mobile section at the bottom). */
+  --page-pad: clamp(18px, 9.5vw, 160px);
+}
+
+/* Dark colors. These apply automatically when the visitor's
+   phone or computer is set to dark mode. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1519;
+    --surface: #151f25;
+    --ink: #e6edf1;
+    --muted: #9aabb6;
+    --line: #27363f;
+    --accent: #5cc0e0;
+    --accent-ink: #06222c;
+  }
+}
+
+
+/* ---------- 2. BASE STYLES ---------- */
+
+/* Makes width and height include padding and border,
+   which keeps layouts predictable. */
+* {
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling when a menu link is clicked.
+   scroll-padding-top stops the sticky menu from covering
+   the heading of the section you jump to. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+  -webkit-text-size-adjust: 100%; /* stops phones from enlarging text on their own */
+}
+
+/* Default page font, size and line spacing.
+   Source Sans 3 is loaded from Google Fonts in index.html;
+   system-ui is the backup if it fails to load. */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  /* Fluid text size: about 16px on phones, growing smoothly
+     to about 19px on large laptop and desktop screens. */
+  font-size: clamp(16px, 0.94rem + 0.25vw, 19px);
+  line-height: 1.7;
+  overflow-wrap: break-word; /* very long words never push the page sideways */
+}
+
+/* All headings use the serif font Fraunces (Georgia is the backup). */
+h1, h2, h3 {
+  font-family: Fraunces, Georgia, serif;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Default link color */
+a {
+  color: var(--accent);
+}
+
+/* Visible outline when a link or button is selected with the
+   keyboard (Tab key). Good for accessibility, so keep it. */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Menu bar and footer use the same side margins as the text,
+   so everything lines up on the left and right. */
+.wrap {
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+}
+
+/* Main content. The website uses the full width of the screen;
+   --page-pad adds the A4 style margins on both sides. */
+.page {
+  padding: 0 var(--page-pad);
+}
+
+/* Inside .page the margins already come from .page,
+   so the inner containers add no extra padding. */
+.page .wrap {
+  padding: 0;
+}
+
+
+/* ---------- 3. NAVIGATION BAR ---------- */
+
+/* Menu bar that stays at the top while scrolling */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 5; /* keeps the menu above other content */
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Lays out the menu links in a row.
+   On small screens the links wrap onto a second line. */
+nav .wrap {
+  display: flex;
+  gap: 6px 22px; /* row gap and column gap between links */
+  flex-wrap: wrap;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* Menu link style */
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Menu link color when the mouse is over it */
+nav a:hover {
+  color: var(--accent);
+}
+
+
+/* ---------- 4. HEADER AND PHOTO ---------- */
+
+/* Top area of the page: name, role, buttons and photo */
+header {
+  padding: 72px 0 56px; /* top, sides, bottom space */
+}
+
+/* Name. clamp(min, preferred, max) makes the size
+   grow and shrink with the screen width. */
+header h1 {
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+/* Job title line under the name */
+.role {
+  font-size: 1.25rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 10px 0 18px;
+}
+
+/* Short intro paragraph. max-width keeps lines easy to read. */
+.lead {
+  max-width: none; /* no limit: the text uses the full width of the page content area */
+  color: var(--muted);
+}
+
+/* Holds the two header buttons side by side */
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+/* Outlined button (for example "Get in touch") */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Filled button (for example "View publications") */
+.btn.main {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Puts the text block and the photo side by side.
+   wrap-reverse means that on a narrow screen the photo
+   moves above the text. */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 44px;
+  flex-wrap: wrap-reverse;
+}
+
+/* Text block next to the photo.
+   380px is the width at which it drops to a new line. */
+.hero .text {
+  flex: 1 1 380px;
+}
+
+/* Round profile photo.
+   object-fit: cover crops the picture to fill the circle
+   without stretching it. Change 210px for a bigger or
+   smaller photo. */
+.photo {
+  width: 210px;
+  height: 210px;
+  border-radius: 50%; /* 50% makes a circle; use 12px for rounded square */
+  object-fit: cover;
+  object-position: center 20%; /* keeps the face in view when the photo is cropped to a circle */
+  border: 4px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent); /* thin colored ring around the photo */
+  flex: 0 0 auto;
+}
+
+
+/* ---------- 5. PAGE SECTIONS ---------- */
+
+/* Every section (About, Experience, etc.) has space
+   around it and a thin line on top. */
+section {
+  padding: 46px 0;
+  border-top: 1px solid var(--line);
+}
+
+/* Section headings such as "Experience" */
+section h2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem); /* section headings scale with the screen */
+  margin-bottom: 22px;
+}
+
+/* One row in Experience or Education:
+   dates on the left (190px), details on the right. */
+.item {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 6px 28px;
+  margin-bottom: 26px;
+}
+
+/* Date text on the left */
+.item .when {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* Job title or degree name */
+.item h3 {
+  font-size: 1.15rem;
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 600;
+}
+
+/* Description under the job title or degree */
+.item p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+
+/* ---------- 6. PUBLICATIONS TABLES ---------- */
+
+/* Small headings "Journals" and "Conferences" */
+h3.sub {
+  font-size: 1.25rem;
+  margin: 30px 0 12px;
+}
+
+/* Box around each table. overflow-x: auto adds a sideways
+   scroll on small phones instead of breaking the layout. */
+.tablebox {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* The table itself */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px; /* below this width the box scrolls sideways */
+}
+
+/* Spacing and lines for all cells (header and body) */
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+/* Column titles: No., Paper, Date, Access */
+th {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* No line under the last row, so the box border is clean */
+tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Column widths:
+   td.n = number column
+   td.d = date column (nowrap keeps the date on one line)
+   td.l = link column with the Read button
+   The Paper column takes whatever space is left. */
+td.n { width: 56px; }
+td.d { width: 110px; white-space: nowrap; }
+td.l { width: 100px; }
+
+/* The "Read" button inside the Access column */
+.read {
+  display: inline-block;
+  padding: 6px 16px; /* bigger tap area for fingers */
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+
+/* ---------- 7. SKILLS ---------- */
+
+/* Skill blocks in a responsive grid. Each block is at least
+   260px wide; extra blocks move to the next row automatically. */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+/* Title of each skill block, such as "Programming" */
+.skills h3 {
+  font-size: 1.05rem;
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Text inside each skill block */
+.skills p {
+  margin: 0;
+  color: var(--muted);
+}
+
+
+/* ---------- 8. CONTACT ---------- */
+
+/* Contact icons: one round colored button for each of
+   Email, WhatsApp and LinkedIn, with a small label below. */
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+/* Each link is an icon with its label under it */
+.social a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* The round button */
+.social .icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s; /* small lift on hover */
+}
+
+/* Icon shape inside the button (always white) */
+.social svg {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+}
+
+/* Button lifts up a little when the mouse is over it */
+.social a:hover .icon {
+  transform: translateY(-3px);
+}
+
+/* Brand colors of each icon */
+.social .gmail { background: #EA4335; }
+.social .whatsapp { background: #25D366; }
+.social .linkedin { background: #0A66C2; }
+
+/* ---------- 9. FOOTER ---------- */
+
+footer {
+  padding: 30px 0;
+  color: var(--muted);
+  font-size: 14px;
+  border-top: 1px solid var(--line);
+}
+
+
+/* ---------- TEXT ALIGNMENT (JUSTIFY) ----------
+   All paragraph text and table cells are justified, so both
+   edges of the text look straight and neat.
+   hyphens: auto breaks long words at the line end, which keeps
+   the gaps between words small (works because index.html has
+   lang="en" at the top).
+   To turn justify off everywhere, delete this whole block. */
+p, td {
+  text-align: justify;
+  hyphens: auto;
+  /* Only break words that are at least 8 letters long, and keep
+     at least 4 letters on each side of the break. This removes
+     awkward breaks like "cur-rently" and "hu-man". */
+  hyphenate-limit-chars: 8 4 4;
+  /* Lets the browser avoid a single lonely word on the last line */
+  text-wrap: pretty;
+}
+
+/* Column titles, number, date and button columns stay left
+   aligned. Justify does not suit short one-line cells. */
+th, td.n, td.d, td.l {
+  text-align: left;
+}
+
+
+/* ---------- 10. TABLET AND MOBILE ADJUSTMENTS ----------
+   These rules apply only when the screen is 720px wide
+   or smaller (phones and small tablets). */
+@media (max-width: 720px) {
+  /* Smaller side margins on phones and small tablets */
+  :root {
+    --page-pad: max(18px, 5vw);
+  }
+
+  /* Dates move above the job details instead of beside them */
+  .item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    margin-bottom: 22px;
+  }
+
+  /* Less space at the top of the page */
+  header {
+    padding: 44px 0 36px;
+  }
+
+  /* Smaller photo on phones */
+  .photo {
+    width: 150px;
+    height: 150px;
+  }
+
+  /* Smaller gaps between sections */
+  section {
+    padding: 34px 0;
+  }
+
+  /* Menu links are a little tighter so they fit in fewer lines */
+  nav .wrap {
+    gap: 4px 16px;
+  }
+  nav a {
+    font-size: 14px;
+  }
+
+  /* Header buttons share the width equally */
+  .btn {
+    flex: 1 1 140px;
+    text-align: center;
+  }
+
+  /* Publications tables become small cards on phones, so
+     nobody has to scroll sideways.
+     Layout of each row:
+       number | paper name
+              | date        Read button
+     The column titles are hidden because the layout explains itself. */
+  table {
+    min-width: 0;
+  }
+  thead {
+    display: none;
+  }
+  tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px 12px;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  tr:last-child {
+    border-bottom: 0;
+  }
+  td {
+    border: 0;
+    padding: 0;
+  }
+  td.n {
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  td:nth-child(2) {
+    grid-column: 2 / 4;
+    grid-row: 1;
+  }
+  td.d {
+    grid-column: 2;
+    grid-row: 2;
+    width: auto;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  td.l {
+    grid-column: 3;
+    grid-row: 2;
+    width: auto;
+  }
+}
+
+
+/* ---------- 11. PRINT / SAVE AS PDF ----------
+   When the page is printed (Ctrl + P) or saved as PDF, it is set up
+   for A4 paper with 15mm margins. The menu is hidden and the sheet
+   frame is removed, so the printout looks clean. */
+@page {
+  size: A4;
+  margin: 15mm;
+}
+@media print {
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+  nav,
+  .btns {
+    display: none;
+  }
+  .page {
+    padding: 0;
+  }
+  header {
+    padding: 0 0 20px;
+  }
+  section {
+    padding: 20px 0;
+    break-inside: avoid; /* avoids splitting a section across two pages when possible */
+  }
+}
